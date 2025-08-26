@@ -1,9 +1,35 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 export default function SymbolFieldBackground() {
   const symbols = ['•', '×', '+', '○', '□', '△', '◇', '▽']
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+    const updateDimensions = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      })
+    }
+    
+    updateDimensions()
+    window.addEventListener('resize', updateDimensions)
+    
+    return () => window.removeEventListener('resize', updateDimensions)
+  }, [])
+
+  if (!isClient) {
+    return (
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50" />
+      </div>
+    )
+  }
   
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -15,13 +41,13 @@ export default function SymbolFieldBackground() {
           key={i}
           className="absolute text-gray-300/30 text-2xl"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
             opacity: 0
           }}
           animate={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
             opacity: [0, 0.5, 0]
           }}
           transition={{
