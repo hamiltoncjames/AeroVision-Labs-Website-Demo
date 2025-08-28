@@ -3,6 +3,8 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { 
   Search, 
   Home, 
@@ -59,38 +61,10 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Top Navigation Bar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/70 backdrop-blur-lg border-b border-cyan-500/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              AeroVision Labs
-            </Link>
-            
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/models" className="text-gray-300 hover:text-cyan-400 transition-colors nav-link">
-                Browse
-              </Link>
-              <Link href="/support" className="text-gray-300 hover:text-cyan-400 transition-colors nav-link">
-                Support
-              </Link>
-              <Link href="/docs" className="text-gray-300 hover:text-cyan-400 transition-colors nav-link">
-                Docs
-              </Link>
-            </nav>
-            
-            <div className="flex items-center space-x-4">
-              <Button asChild variant="outline" className="border-cyan-500/30 bg-transparent hover:bg-cyan-900/10 hover:border-cyan-500/50 text-cyan-400">
-                <Link href="/login">Login</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <div className="flex pt-20">
         {/* Left Sidebar */}
-        <aside className="w-80 bg-gray-900/70 backdrop-blur-lg border-r border-indigo-500/20 min-h-screen fixed left-[20vw] top-20 linkedin-sidebar">
+        <aside className="w-80 bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 sticky top-20 h-fit linkedin-sidebar ml-[20vw] rounded-lg">
           <div className="p-4">
             {/* Company Profile Card */}
             <motion.div
@@ -147,7 +121,7 @@ export default function AccountPage() {
         </aside>
 
         {/* Main Content Area */}
-        <main className="ml-[calc(20vw+20rem+1rem)] mr-[20vw] flex-1 bg-black min-h-screen">
+        <main className="ml-6 mr-[20vw] flex-1 bg-black">
           <div className="pl-6 py-6">
             {/* Dashboard Section */}
             <motion.div 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Download, Zap, Shield } from 'lucide-react'
+import { ArrowRight, Download, Zap, Shield, Globe, Filter, CreditCard, Smartphone, Wifi, CheckCircle, Users, Activity, WifiOff, Smartphone as PhoneIcon } from 'lucide-react'
 import Link from 'next/link'
 import SymbolFieldBackground from '@/components/SymbolFieldBackground'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ export default function HomePage() {
     {
       icon: Download,
       title: 'Offline-Ready',
-      description: 'Download models to your controller and fly without internet connection.'
+      description: 'Low-latency, on-device inference. No cloud needed in the field.'
     },
     {
       icon: Zap,
@@ -20,22 +20,32 @@ export default function HomePage() {
       description: 'Purchase individual models or get unlimited access with our subscription plan.'
     },
     {
-      icon: Shield,
-      title: 'Made for DJI MSDK v5',
-      description: 'Optimized for the latest DJI controller technology and SDK.'
+      icon: Globe,
+      title: 'Australian Data Hosting',
+      description: 'Data stays in Australia, custom model details are secret.'
     }
   ]
 
-  const testimonials = [
+  const howItWorks = [
     {
-      quote: "These models have transformed our agricultural surveying. The accuracy is incredible.",
-      author: "Sarah Chen",
-      role: "Agricultural Inspector"
+      icon: Filter,
+      title: 'Choose a model',
+      description: 'Filter by task, device and size.'
     },
     {
-      quote: "Fast, reliable, and the offline capability is a game-changer for remote sites.",
-      author: "Mike Rodriguez",
-      role: "Infrastructure Inspector"
+      icon: CreditCard,
+      title: 'Purchase',
+      description: 'Licence appears in your Library immediately.'
+    },
+    {
+      icon: Smartphone,
+      title: 'Install to device',
+      description: 'One-tap install to your linked controller.'
+    },
+    {
+      icon: Wifi,
+      title: 'Fly offline',
+      description: 'Detections on-board; sync results when you\'re back online.'
     }
   ]
 
@@ -82,7 +92,7 @@ export default function HomePage() {
       <main>
         {/* Home Section */}
         <section id="home" className="min-h-screen flex items-center justify-center relative pt-20">
-          <div className="container mx-auto px-6 py-20">
+          <div className="container mx-auto px-6 py-6">
             <div className="flex flex-col items-center text-center">
               <div className="relative mb-4">
                 <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-3xl"></div>
@@ -118,11 +128,6 @@ export default function HomePage() {
                     </Link>
                   </Button>
                 </div>
-                <Button asChild variant="outline" className="px-6 py-3 bg-transparent border border-cyan-500/30 rounded-lg text-cyan-400 text-base font-medium flex items-center justify-center gap-2 hover:bg-cyan-900/10 hover:border-cyan-500/50 transition-all duration-300">
-                  <Link href="/support">
-                    Support
-                  </Link>
-                </Button>
               </motion.div>
             </div>
           </div>
@@ -134,11 +139,11 @@ export default function HomePage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="min-h-screen flex items-center relative py-20">
+        <section id="features" className="py-16">
           <div className="container mx-auto px-6">
             <div className="max-w-5xl mx-auto">
               <motion.div 
-                className="text-center mb-16"
+                className="text-center mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -162,13 +167,13 @@ export default function HomePage() {
                     className="relative group"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
-                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300">
-                      <div className="flex flex-col">
+                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                      <div className="flex flex-col h-full">
                         <div className="w-16 h-16 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
                           <feature.icon className="w-8 h-8 text-brand-blue" />
                         </div>
                         <div className="font-medium text-xl text-white mb-3 text-center">{feature.title}</div>
-                        <p className="text-gray-400 text-center">{feature.description}</p>
+                        <p className="text-gray-400 text-center flex-grow">{feature.description}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -178,10 +183,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Trust Section */}
-        <section id="trust" className="min-h-screen flex items-center relative py-20">
+        {/* How It Works Section */}
+        <section id="how-it-works" className="py-16">
           <div className="container mx-auto px-6">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <motion.div 
                 className="text-center mb-12"
                 initial={{ opacity: 0, y: 20 }}
@@ -190,16 +195,16 @@ export default function HomePage() {
                 viewport={{ once: true }}
               >
                 <div className="inline-block mb-3">
-                  <div className="text-xs text-cyan-400 tracking-widest uppercase mb-1">Trusted by Industry Professionals</div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Customer Success</div>
+                  <div className="text-xs text-cyan-400 tracking-widest uppercase mb-1">Simple and Streamlined</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">How It Works</div>
                 </div>
                 <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto"></div>
               </motion.div>
               
-              <div className="grid md:grid-cols-2 gap-8">
-                {testimonials.map((testimonial, index) => (
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {howItWorks.map((step, index) => (
                   <motion.div
-                    key={testimonial.author}
+                    key={step.title}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -207,17 +212,18 @@ export default function HomePage() {
                     className="relative group"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
-                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300">
-                      <blockquote className="text-lg text-gray-300 mb-4">
-                        "{testimonial.quote}"
-                      </blockquote>
-                      <div>
-                        <div className="font-semibold text-white">
-                          {testimonial.author}
+                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                      <div className="flex flex-col h-full">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-8 h-8 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-full flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">{index + 1}</span>
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-400">
-                          {testimonial.role}
+                        <div className="w-16 h-16 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <step.icon className="w-8 h-8 text-brand-blue" />
                         </div>
+                        <div className="font-medium text-xl text-white mb-3 text-center">{step.title}</div>
+                        <p className="text-gray-400 text-center flex-grow">{step.description}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -227,8 +233,123 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Why Offline Section */}
+        <section id="why-offline" className="py-16">
+          <div className="container mx-auto px-6">
+            <div className="max-w-6xl mx-auto">
+              <motion.div 
+                className="text-center mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block mb-3">
+                  <div className="text-xs text-cyan-400 tracking-widest uppercase mb-1">Designed for Real-World Operations</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Built for Reliability</div>
+                </div>
+                <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto"></div>
+              </motion.div>
+              
+              <div className="grid md:grid-cols-2 gap-12">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                  <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-8 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-lg flex items-center justify-center mr-4">
+                          <WifiOff className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">Why offline?</h3>
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed flex-grow">
+                        Spotty coverage shouldn't stop a mission. Our edge models run fully offline on the controller, giving you consistent FPS and predictable latency. Use the cloud later for archiving, sharing and retraining — not for live decision-making.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                  <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-8 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center mr-4">
+                          <PhoneIcon className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">Built for DJI</h3>
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed flex-grow">
+                        Optimised with DJI RC Pro and Plus controllers in mind. We profile models for FPS, memory footprint and storage, so you know exactly what fits before you fly.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                  <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-8 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mr-4">
+                          <Users className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">Contributor program</h3>
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed flex-grow">
+                        Have quality aerial imagery? Contribute datasets to improve Australian conditions and receive credit, discounts and more. We accept farmland, solar, distribution lines, and post-storm imagery (with consent where required).
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                  <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-8 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300 h-full">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-red-600 rounded-lg flex items-center justify-center mr-4">
+                          <Activity className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">Live device status</h3>
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed flex-grow">
+                        Link your controller to see connected devices, storage availability and install status at a glance. Update, roll back or reinstall models in seconds.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
-        <section id="cta" className="min-h-screen flex items-center relative py-20">
+        <section id="cta" className="py-16">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center">
               <motion.h2 
@@ -238,7 +359,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                Ready to Transform Your Drone Operations?
+                Ready to discover?
               </motion.h2>
               <motion.p 
                 className="text-xl mb-8 text-gray-300"
@@ -247,7 +368,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                Join thousands of professionals who trust AeroVision Labs for their AI model needs.
+                See what your drone sees
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -257,10 +378,10 @@ export default function HomePage() {
                 className="relative group"
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-600/50 to-purple-600/50 rounded-lg blur opacity-75 group-hover:opacity-100 transition-all duration-500"></div>
-                <Button asChild className="px-6 py-3 bg-gradient-to-r from-indigo-900/90 to-purple-900/90 rounded-lg text-white text-base font-medium relative z-10 flex items-center justify-center gap-2 group-hover:from-indigo-800/90 group-hover:to-purple-800/90 transition-all duration-300 transform group-hover:scale-105 group-active:scale-95">
+                <Button asChild className="px-8 py-4 bg-gradient-to-r from-indigo-900/90 to-purple-900/90 rounded-lg text-white text-lg font-medium relative z-10 flex items-center justify-center gap-2 group-hover:from-indigo-800/90 group-hover:to-purple-800/90 transition-all duration-300 transform group-hover:scale-105 group-active:scale-95">
                   <Link href="/models">
                     <span className="bg-gradient-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent">Browse Models</span>
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="ml-2 w-6 h-6" />
                   </Link>
                 </Button>
               </motion.div>

@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { 
   BookOpen, 
   Smartphone, 
@@ -692,9 +694,10 @@ export default function DocsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Header />
       <div className="flex pt-20">
         {/* Left Sidebar */}
-        <aside className="w-80 bg-gray-900/70 backdrop-blur-lg border-r border-indigo-500/20 min-h-screen fixed left-[20vw] top-20 shadow-sm linkedin-sidebar">
+        <aside className="w-80 bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 sticky top-20 h-fit shadow-sm linkedin-sidebar ml-[20vw] rounded-lg">
           <div className="p-6">
             <motion.h2 
               className="text-xl font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-6"
@@ -733,13 +736,14 @@ export default function DocsPage() {
           </div>
         </aside>
 
-        {/* Main Content Area */}
-        <main className="ml-[calc(20vw+20rem+1rem)] mr-[20vw] flex-1 bg-black min-h-screen">
-          <div className="pl-6 py-8">
+       {/* Main Content Area */}
+       <main className="ml-6 mr-[20vw] flex-1 bg-black">
+          <div className="pl-6 py-8 pb-16">
             {renderContent()}
           </div>
         </main>
       </div>
+     
     </div>
   )
 }
