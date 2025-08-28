@@ -1,4 +1,4 @@
-import ModelsCatalog from '@/pages/Models/ModelsCatalog'
+import ModelsCatalog from '@/components/models/ModelsCatalog'
 
 export default function ModelsPage() {
   return (

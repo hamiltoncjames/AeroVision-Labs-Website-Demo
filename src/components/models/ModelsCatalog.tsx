@@ -3,8 +3,8 @@
 import React, { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Filter, SortAsc, SortDesc } from 'lucide-react'
-import ModelCard from './components/ModelCard'
-import Filters from './components/Filters'
+import ModelCard from '@/components/models/ModelCard'
+import Filters from '@/components/models/Filters'
 import { models } from '@/mock/models'
 
 export default function ModelsCatalog() {
