@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -160,4 +162,24 @@
 
 .gradient-bg-alt {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* LinkedIn-style inset design */
+.linkedin-card {
+  @apply shadow-md border-0 bg-white rounded-lg;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+}
+
+.linkedin-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.linkedin-sidebar {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.linkedin-header {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }

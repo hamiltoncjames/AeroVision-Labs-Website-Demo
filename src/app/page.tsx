@@ -3,8 +3,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Download, Zap, Shield } from 'lucide-react'
 import Link from 'next/link'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import SymbolFieldBackground from '@/components/SymbolFieldBackground'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,188 +40,234 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-brand-offwhite">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <SymbolFieldBackground />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1 
-              className="text-5xl md:text-7xl font-bold text-brand-charcoal mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              AI models for real-world drone work.
-            </motion.h1>
-            <motion.p 
-              className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              Pick a model, download to your controller, fly offline.
-            </motion.p>
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <Button asChild size="lg" className="text-lg px-8 py-6">
-                <Link href="/models">
-                  Open Model Store
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-                <Link href="/pricing">
-                  View Pricing
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
+    <div className="bg-black text-white font-['Space_Grotesk'] overflow-x-hidden">
+      {/* Background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-indigo-900/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-900/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 right-20 w-64 h-64 bg-cyan-900/10 rounded-full blur-3xl"></div>
+        
+        {/* Decorative grid lines */}
+        <div className="absolute inset-0 grid grid-cols-12 opacity-5 pointer-events-none">
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
+          <div className="border-r border-cyan-500"></div>
         </div>
-      </section>
+        <div className="absolute inset-0 grid grid-rows-12 opacity-5 pointer-events-none">
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+          <div className="border-b border-cyan-500"></div>
+        </div>
+      </div>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <motion.div 
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl font-bold text-brand-charcoal mb-4">
-                Built for Professional Drone Operations
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Our models are designed specifically for commercial drone applications, 
-                providing the accuracy and reliability you need in the field.
-              </p>
-            </motion.div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={feature.title}
+      {/* Main Content Sections */}
+      <main>
+        {/* Home Section */}
+        <section id="home" className="min-h-screen flex items-center justify-center relative pt-20">
+          <div className="container mx-auto px-6 py-20">
+            <div className="flex flex-col items-center text-center">
+              <div className="relative mb-4">
+                <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-3xl"></div>
+                <motion.div 
+                  className="text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent pb-2 relative"
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <Card className="h-full border-0 shadow-lg">
-                    <CardHeader className="text-center">
-                      <div className="w-16 h-16 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <feature.icon className="w-8 h-8 text-brand-blue" />
-                      </div>
-                      <CardTitle className="text-xl">{feature.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-center text-base">
-                        {feature.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
+                  AI models for real-world drone work.
                 </motion.div>
-              ))}
+              </div>
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Pick a model, download to your controller, fly offline.
+              </motion.p>
+              <motion.div 
+                className="flex gap-4 flex-wrap justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <div className="relative group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-600/50 to-purple-600/50 rounded-lg blur opacity-75 group-hover:opacity-100 transition-all duration-500"></div>
+                  <Button asChild className="px-6 py-3 bg-gradient-to-r from-indigo-900/90 to-purple-900/90 rounded-lg text-white text-base font-medium relative z-10 flex items-center justify-center gap-2 group-hover:from-indigo-800/90 group-hover:to-purple-800/90 transition-all duration-300 transform group-hover:scale-105 group-active:scale-95">
+                    <Link href="/models">
+                      <span className="bg-gradient-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent">Browse Models</span>
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Link>
+                  </Button>
+                </div>
+                <Button asChild variant="outline" className="px-6 py-3 bg-transparent border border-cyan-500/30 rounded-lg text-cyan-400 text-base font-medium flex items-center justify-center gap-2 hover:bg-cyan-900/10 hover:border-cyan-500/50 transition-all duration-300">
+                  <Link href="/support">
+                    Support
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </div>
-        </div>
-      </section>
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </section>
 
-      {/* Trust Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-brand-charcoal mb-4">
-                Trusted by Industry Professionals
-              </h2>
-            </motion.div>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={testimonial.author}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="h-full">
-                    <CardContent className="pt-6">
-                      <blockquote className="text-lg text-gray-700 mb-4">
+        {/* Features Section */}
+        <section id="features" className="min-h-screen flex items-center relative py-20">
+          <div className="container mx-auto px-6">
+            <div className="max-w-5xl mx-auto">
+              <motion.div 
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block mb-3">
+                  <div className="text-xs text-cyan-400 tracking-widest uppercase mb-1">Built for Professional Drone Operations</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Our Technology</div>
+                </div>
+                <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto"></div>
+              </motion.div>
+              
+              <div className="grid md:grid-cols-3 gap-8">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={feature.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="relative group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300">
+                      <div className="flex flex-col">
+                        <div className="w-16 h-16 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <feature.icon className="w-8 h-8 text-brand-blue" />
+                        </div>
+                        <div className="font-medium text-xl text-white mb-3 text-center">{feature.title}</div>
+                        <p className="text-gray-400 text-center">{feature.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust Section */}
+        <section id="trust" className="min-h-screen flex items-center relative py-20">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto">
+              <motion.div 
+                className="text-center mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block mb-3">
+                  <div className="text-xs text-cyan-400 tracking-widest uppercase mb-1">Trusted by Industry Professionals</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Customer Success</div>
+                </div>
+                <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto"></div>
+              </motion.div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {testimonials.map((testimonial, index) => (
+                  <motion.div
+                    key={testimonial.author}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="relative group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm group-hover:bg-indigo-500/30 transition-all duration-500"></div>
+                    <div className="relative bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 p-6 rounded-xl shadow-xl group-hover:border-indigo-500/40 transition-all duration-300">
+                      <blockquote className="text-lg text-gray-300 mb-4">
                         "{testimonial.quote}"
                       </blockquote>
                       <div>
-                        <div className="font-semibold text-brand-charcoal">
+                        <div className="font-semibold text-white">
                           {testimonial.author}
                         </div>
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-gray-400">
                           {testimonial.role}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-brand-charcoal text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h2 
-              className="text-4xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              Ready to Transform Your Drone Operations?
-            </motion.h2>
-            <motion.p 
-              className="text-xl mb-8 text-gray-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              Join thousands of professionals who trust AeroVision Labs for their AI model needs.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <Button asChild size="lg" className="text-lg px-8 py-6 bg-brand-blue hover:bg-brand-blue/90">
-                <Link href="/models">
-                  Browse Models
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-            </motion.div>
+        {/* CTA Section */}
+        <section id="cta" className="min-h-screen flex items-center relative py-20">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.h2 
+                className="text-4xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                Ready to Transform Your Drone Operations?
+              </motion.h2>
+              <motion.p 
+                className="text-xl mb-8 text-gray-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Join thousands of professionals who trust AeroVision Labs for their AI model needs.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="relative group"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-600/50 to-purple-600/50 rounded-lg blur opacity-75 group-hover:opacity-100 transition-all duration-500"></div>
+                <Button asChild className="px-6 py-3 bg-gradient-to-r from-indigo-900/90 to-purple-900/90 rounded-lg text-white text-base font-medium relative z-10 flex items-center justify-center gap-2 group-hover:from-indigo-800/90 group-hover:to-purple-800/90 transition-all duration-300 transform group-hover:scale-105 group-active:scale-95">
+                  <Link href="/models">
+                    <span className="bg-gradient-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent">Browse Models</span>
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <Footer />
+        </section>
+      </main>
     </div>
   )
 }
