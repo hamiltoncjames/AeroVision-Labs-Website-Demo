@@ -1,358 +1,325 @@
 'use client'
 
 import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { MessageCircle, Phone, Mail, FileText, CheckCircle } from "lucide-react";
 
 type PreferredContact = "phone_now" | "email" | "text";
 
-type FormState = {
-  issueCategory: string;
-  issueDetails: string;
-  name: string;
-  email: string;
-  phone: string;
-  preferred: PreferredContact | "";
-};
-
-const ISSUE_CATEGORIES = [
-  "Model download/install issue",
-  "Device linking problem",
-  "Billing or invoice question",
-  "Bug or unexpected behaviour",
-  "Feature request / feedback",
-  "Other",
-];
-
-const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
-const phoneOk = (v: string) => {
-  const digits = v.replace(/[^\d]/g, "");
-  return digits.length >= 8; // simple demo check (AU numbers typically 10)
-};
-
-function Stepper({ step }: { step: number }) {
-  const labels = ["Issue", "Contact", "Preference", "Review"];
-  return (
-    <ol className="mb-6 flex items-center gap-3 text-xs">
-      {labels.map((label, i) => {
-        const active = i === step;
-        const done = i < step;
-        return (
-          <li key={label} className="flex items-center gap-2">
-            <span
-              className={[
-                "grid h-6 w-6 place-items-center rounded-full border text-[11px]",
-                done
-                  ? "border-emerald-500 bg-emerald-500 text-white"
-                  : active
-                  ? "border-slate-900 bg-slate-900 text-white"
-                  : "border-slate-300 bg-white text-slate-600",
-              ].join(" ")}
-            >
-              {i + 1}
-            </span>
-            <span className={active ? "font-medium" : "text-slate-500"}>{label}</span>
-            {i < labels.length - 1 && <span className="mx-2 h-px w-8 bg-slate-200" />}
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
-
 export default function SupportHub() {
-  const [step, setStep] = useState(0);
-  const [submittedId, setSubmittedId] = useState<string | null>(null);
-  const [f, setF] = useState<FormState>({
-    issueCategory: "",
-    issueDetails: "",
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    preferred: "",
+    issue: "",
+    description: "",
+    preferredContact: "email" as PreferredContact,
+    urgency: "medium",
   });
 
-  // Step validations
-  const stepValid = useMemo(() => {
-    if (step === 0) {
-      return f.issueCategory.trim().length > 0 && f.issueDetails.trim().length >= 10;
+  const canProceed = useMemo(() => {
+    switch (step) {
+      case 1:
+        return formData.name.trim() && formData.email.trim();
+      case 2:
+        return formData.issue.trim();
+      case 3:
+        return formData.description.trim();
+      case 4:
+        return true;
+      default:
+        return false;
     }
-    if (step === 1) {
-      const base = f.name.trim().length >= 2;
-      return base && (f.email.trim().length > 0 || f.phone.trim().length > 0);
-    }
-    if (step === 2) {
-      if (f.preferred === "") return false;
-      if (f.preferred === "email") return emailOk(f.email);
-      if (f.preferred === "text" || f.preferred === "phone_now") return phoneOk(f.phone);
-      return false;
-    }
-    if (step === 3) return true;
-    return false;
-  }, [step, f]);
+  }, [step, formData]);
 
-  const onSubmit = () => {
-    // Demo only: generate a fake ticket id and show success
-    const id = `SUP-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000 + 1000)}`;
-    console.log("Support submission (demo)", { id, ...f });
-    setSubmittedId(id);
+  const handleNext = () => {
+    if (canProceed && step < 4) {
+      setStep(step + 1);
+    }
   };
 
-  if (submittedId) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <div className="mb-2 text-2xl font-semibold">Request submitted</div>
-          <p className="text-slate-600">
-            Thanks, we've captured your request. Your demo ticket ID is{" "}
-            <span className="font-mono font-semibold">{submittedId}</span>.
-          </p>
-          <div className="mt-6 text-xs text-slate-500">
-            Demo only — no messages will be sent. Buttons on this page do not link out.
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Demo submission
+    console.log("Support request submitted:", formData);
+    setStep(5);
+  };
+
+  const updateFormData = (field: keyof typeof formData, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="mb-2 text-2xl font-semibold">Support</h1>
-      <p className="mb-6 text-sm text-slate-600">
-        This is a progressive form. Complete each step to continue. No external links are wired on this demo page.
-      </p>
+    <div className="min-h-screen bg-black text-white">
+      <div className="container mx-auto px-6 py-8">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
+            Support Hub
+          </h1>
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            Get help with your AI models and drone operations. Our team is here to assist you.
+          </p>
+        </motion.div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <Stepper step={step} />
-
-        {/* Step 0: Issue */}
-        {step === 0 && (
-          <div className="space-y-6">
-            <div>
-              <label className="mb-2 block text-xs font-medium text-slate-700">What's the issue about?</label>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {ISSUE_CATEGORIES.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setF((s) => ({ ...s, issueCategory: c }))}
-                    className={[
-                      "rounded-xl border px-3 py-2 text-left text-sm",
-                      f.issueCategory === c
-                        ? "border-slate-900 bg-slate-900 text-white"
-                        : "border-slate-300 bg-white",
-                    ].join(" ")}
-                    aria-pressed={f.issueCategory === c}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-              <p className="mt-1 text-[11px] text-slate-500">Choose one to proceed.</p>
-            </div>
-
-            <div>
-              <label htmlFor="issueDetails" className="mb-2 block text-xs font-medium text-slate-700">
-                Describe the issue (min 10 chars)
-              </label>
-              <textarea
-                id="issueDetails"
-                value={f.issueDetails}
-                onChange={(e) => setF((s) => ({ ...s, issueDetails: e.target.value }))}
-                className="h-32 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                placeholder="Tell us what happened, any error messages, device used, etc."
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Step 1: Contact details */}
-        {step === 1 && (
-          <div className="space-y-5">
-            <div>
-              <label htmlFor="name" className="mb-1 block text-xs font-medium text-slate-700">
-                Your name
-              </label>
-              <input
-                id="name"
-                value={f.name}
-                onChange={(e) => setF((s) => ({ ...s, name: e.target.value }))}
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                placeholder="Jane Citizen"
-                autoComplete="name"
-              />
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="email" className="mb-1 block text-xs font-medium text-slate-700">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={f.email}
-                  onChange={(e) => setF((s) => ({ ...s, email: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                />
-                {f.email && !emailOk(f.email) && (
-                  <p className="mt-1 text-[11px] text-rose-600">Please enter a valid email.</p>
+        {/* Progress Steps */}
+        <motion.div 
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="flex justify-center mb-8">
+            {[1, 2, 3, 4].map((stepNumber) => (
+              <div key={stepNumber} className="flex items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                  stepNumber < step 
+                    ? 'bg-green-600 text-white' 
+                    : stepNumber === step 
+                    ? 'bg-cyan-500 text-white' 
+                    : 'bg-gray-700 text-gray-400'
+                }`}>
+                  {stepNumber < step ? <CheckCircle className="w-5 h-5" /> : stepNumber}
+                </div>
+                {stepNumber < 4 && (
+                  <div className={`w-16 h-1 mx-2 transition-all duration-300 ${
+                    stepNumber < step ? 'bg-green-600' : 'bg-gray-700'
+                  }`} />
                 )}
               </div>
-
-              <div>
-                <label htmlFor="phone" className="mb-1 block text-xs font-medium text-slate-700">
-                  Phone
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  inputMode="tel"
-                  value={f.phone}
-                  onChange={(e) => setF((s) => ({ ...s, phone: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  placeholder="+61 4xx xxx xxx"
-                  autoComplete="tel"
-                />
-                {f.phone && !phoneOk(f.phone) && (
-                  <p className="mt-1 text-[11px] text-rose-600">Please enter a valid phone number.</p>
-                )}
-              </div>
-            </div>
-
-            <p className="text-[11px] text-slate-500">
-              You can provide either email or phone now; you'll choose your preferred contact method next.
-            </p>
+            ))}
           </div>
-        )}
+        </motion.div>
 
-        {/* Step 2: Preferred contact */}
-        {step === 2 && (
-          <div className="space-y-5">
-            <fieldset>
-              <legend className="mb-2 block text-xs font-medium text-slate-700">Preferred method of contact</legend>
-              <div className="grid gap-2 sm:grid-cols-3">
-                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm">
-                  <input
-                    type="radio"
-                    name="pref"
-                    checked={f.preferred === "phone_now"}
-                    onChange={() => setF((s) => ({ ...s, preferred: "phone_now" }))}
-                  />
-                  Instant phone call
-                </label>
-                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm">
-                  <input
-                    type="radio"
-                    name="pref"
-                    checked={f.preferred === "email"}
-                    onChange={() => setF((s) => ({ ...s, preferred: "email" }))}
-                  />
-                  Email
-                </label>
-                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm">
-                  <input
-                    type="radio"
-                    name="pref"
-                    checked={f.preferred === "text"}
-                    onChange={() => setF((s) => ({ ...s, preferred: "text" }))}
-                  />
-                  Text
-                </label>
-              </div>
-            </fieldset>
+        {/* Form Container */}
+        <motion.div 
+          className="max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 rounded-xl p-8 shadow-xl">
+            {step === 1 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold text-white mb-6">Contact Information</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Name</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => updateFormData("name", e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 focus:border-cyan-500 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-colors"
+                      placeholder="Your full name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateFormData("email", e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 focus:border-cyan-500 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-colors"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
-            {f.preferred === "phone_now" && (
-              <div className="rounded-xl bg-amber-50 p-3 text-xs text-amber-900">
-                You'll receive an instant callback to{" "}
-                <span className="font-medium">{f.phone || "(no phone provided yet)"}</span>.  
-                Ensure your number is correct on the previous step.
+            {step === 2 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold text-white mb-6">What's the issue?</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Issue Type</label>
+                    <select
+                      value={formData.issue}
+                      onChange={(e) => updateFormData("issue", e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 focus:border-cyan-500 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-colors"
+                    >
+                      <option value="">Select an issue type</option>
+                      <option value="model-download">Model Download Problem</option>
+                      <option value="installation">Installation Issues</option>
+                      <option value="performance">Performance Problems</option>
+                      <option value="compatibility">Device Compatibility</option>
+                      <option value="billing">Billing & Payment</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 3 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold text-white mb-6">Describe the problem</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Description</label>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) => updateFormData("description", e.target.value)}
+                      rows={4}
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 focus:border-cyan-500 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-colors resize-none"
+                      placeholder="Please provide details about your issue..."
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Urgency</label>
+                    <select
+                      value={formData.urgency}
+                      onChange={(e) => updateFormData("urgency", e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 focus:border-cyan-500 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-colors"
+                    >
+                      <option value="low">Low - General inquiry</option>
+                      <option value="medium">Medium - Some impact on operations</option>
+                      <option value="high">High - Critical impact on operations</option>
+                    </select>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 4 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold text-white mb-6">How should we contact you?</h2>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      { value: "email", icon: Mail, label: "Email", desc: "We'll respond within 24 hours" },
+                      { value: "phone_now", icon: Phone, label: "Phone Now", desc: "Immediate callback" },
+                      { value: "text", icon: MessageCircle, label: "Text Message", desc: "SMS updates" }
+                    ].map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => updateFormData("preferredContact", option.value)}
+                        className={`p-4 rounded-lg border transition-all duration-300 text-left ${
+                          formData.preferredContact === option.value
+                            ? 'border-cyan-500 bg-cyan-900/20'
+                            : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
+                        }`}
+                      >
+                        <option.icon className={`w-6 h-6 mb-2 ${
+                          formData.preferredContact === option.value ? 'text-cyan-400' : 'text-gray-400'
+                        }`} />
+                        <div className="font-medium text-white">{option.label}</div>
+                        <div className="text-sm text-gray-400">{option.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {step === 5 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <h2 className="text-2xl font-semibold text-white mb-4">Support Request Submitted!</h2>
+                <p className="text-gray-400 mb-6">
+                  Thank you for contacting us. We'll get back to you soon using your preferred contact method.
+                </p>
+                <button
+                  onClick={() => {
+                    setStep(1);
+                    setFormData({
+                      name: "",
+                      email: "",
+                      issue: "",
+                      description: "",
+                      preferredContact: "email",
+                      urgency: "medium",
+                    });
+                  }}
+                  className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg transition-all duration-300"
+                >
+                  Submit Another Request
+                </button>
+              </motion.div>
+            )}
+
+            {/* Navigation Buttons */}
+            {step < 5 && (
+              <div className="flex justify-between mt-8">
+                <button
+                  onClick={handleBack}
+                  disabled={step === 1}
+                  className="px-6 py-2 border border-gray-700 bg-transparent hover:bg-gray-800 text-gray-300 hover:text-white rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={step === 4 ? handleSubmit : handleNext}
+                  disabled={!canProceed}
+                  className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {step === 4 ? "Submit Request" : "Next"}
+                </button>
               </div>
             )}
-            {f.preferred === "email" && (
-              <div className="rounded-xl bg-blue-50 p-3 text-xs text-blue-900">
-                We'll email you at <span className="font-medium">{f.email || "(no email provided yet)"}</span>.
-              </div>
-            )}
-            {f.preferred === "text" && (
-              <div className="rounded-xl bg-emerald-50 p-3 text-xs text-emerald-900">
-                We'll text you at <span className="font-medium">{f.phone || "(no phone provided yet)"}</span>.
-              </div>
-            )}
           </div>
-        )}
+        </motion.div>
 
-        {/* Step 3: Review */}
-        {step === 3 && (
-          <div className="space-y-4">
-            <div className="rounded-xl border border-slate-200 p-4">
-              <div className="mb-2 text-sm font-medium">Summary</div>
-              <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
-                <div>
-                  <dt className="text-slate-500">Issue category</dt>
-                  <dd className="font-medium">{f.issueCategory}</dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Preferred contact</dt>
-                  <dd className="font-medium">
-                    {f.preferred === "phone_now" ? "Instant phone call" : f.preferred === "email" ? "Email" : "Text"}
-                  </dd>
-                </div>
-                <div className="sm:col-span-2">
-                  <dt className="text-slate-500">Issue details</dt>
-                  <dd className="whitespace-pre-wrap font-medium">{f.issueDetails}</dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Name</dt>
-                  <dd className="font-medium">{f.name}</dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Email</dt>
-                  <dd className="font-medium">{f.email || "—"}</dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Phone</dt>
-                  <dd className="font-medium">{f.phone || "—"}</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="text-xs text-slate-500">
-              Demo only — submitting will generate a fake ticket ID and show a success message. No external links.
-            </div>
+        {/* Quick Links */}
+        <motion.div 
+          className="mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <h3 className="text-2xl font-semibold text-white text-center mb-6">Quick Resources</h3>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { icon: FileText, title: "Documentation", desc: "Browse our comprehensive guides", url: "/docs" },
+              { icon: MessageCircle, title: "Community", desc: "Connect with other users", url: "/community" },
+              { icon: Phone, title: "Emergency", desc: "Critical issues - call us now", url: "/emergency" }
+            ].map((resource, index) => (
+              <motion.div
+                key={resource.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                className="bg-gray-900/70 backdrop-blur-lg border border-indigo-500/20 rounded-xl p-6 shadow-xl hover:border-indigo-500/40 transition-all duration-300 cursor-pointer"
+                data-url={resource.url}
+              >
+                <resource.icon className="w-8 h-8 text-cyan-400 mb-3" />
+                <h4 className="text-lg font-semibold text-white mb-2">{resource.title}</h4>
+                <p className="text-gray-400">{resource.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        )}
-
-        {/* Controls */}
-        <div className="mt-6 flex items-center justify-between">
-          <button
-            type="button"
-            className="rounded-xl border border-slate-300 px-4 py-2 text-sm disabled:opacity-50"
-            onClick={() => setStep((s) => Math.max(0, s - 1))}
-            disabled={step === 0}
-          >
-            Back
-          </button>
-
-          {step < 3 ? (
-            <button
-              type="button"
-              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
-              onClick={() => setStep((s) => Math.min(3, s + 1))}
-              disabled={!stepValid}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
-              onClick={onSubmit}
-              disabled={!stepValid}
-            >
-              Submit
-            </button>
-          )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

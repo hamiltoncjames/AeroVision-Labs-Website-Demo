@@ -21,6 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
+          {/* Futuristic background elements */}
+          <div className="futuristic-bg"></div>
+          <div className="grid-overlay"></div>
+          
           <Header />
           <main className="pt-16">
             {children}
