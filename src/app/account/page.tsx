@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Header from '@/components/Header'
@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import Image from 'next/image'
 
 export default function AccountPage() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -78,8 +79,14 @@ export default function AccountPage() {
                     <Edit className="w-4 h-4 text-white cursor-pointer hover:text-cyan-300 transition-colors" />
                   </div>
                   <div className="absolute -bottom-8 left-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center border-2 border-cyan-400/30">
-                      <span className="text-white font-bold text-xl">AV</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center border-2 border-cyan-400/30 overflow-hidden">
+                      <Image
+                        src="/images/aerovision-logo.png"
+                        alt="AeroVision Labs Logo"
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
                     </div>
                   </div>
                 </div>
